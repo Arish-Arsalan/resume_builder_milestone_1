@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Resume Builder</title>
+        <style>
+            /* CSS styles */
+    
+            * {
+                box-sizing: border-box;
+                font-family: Arial, sans-serif;
+            }
+    
+            body {
+                background-color: #f4f4f4;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+            }
+    
+            .container {
+                width: 90%;
+                max-width: 600px;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
+    
+            h1, h2 {
+                color: black;
+                text-align: center;
+            }
+    
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+    
+            input, textarea, button {
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                font-size: 16px;
+            }
+    
+            textarea {
+                resize: vertical;
+            }
+    
+            button {
+                cursor: pointer;
+                background-color: #333;
+                color: white;
+                font-weight: bold;
+                border: none;
+            }
+    
+            .resume-preview {
+                margin-top: 20px;
+                padding: 20px;
+                border-top: 2px solid rgba(0, 0, 0, 0.1);
+            }
+    
+            #resume-preview p {
+                line-height: 1.6;
+            }
+    
+            #print-btn {
+                margin-top: 15px;
+                width: 100%;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Resume Builder</h1>
+            <form id="resume-form">
+                <input type="text" id="name" placeholder="Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="tel" id="phone" placeholder="Phone" required>
+                <textarea id="summary" placeholder="Summary" required></textarea>
+                <textarea id="experience" placeholder="Experience" required></textarea>
+                <textarea id="education" placeholder="Education" required></textarea>
+                <textarea id="skills" placeholder="Skills" required></textarea>
+                <button type="button" onclick="generateResume()">Generate Resume</button>
+            </form>
+    
+            <div id="resume-preview" class="resume-preview" style="display: none;">
+                <h2>Resume Preview</h2>
+                <p><strong>Name:</strong> <span id="preview-name"></span></p>
+                <p><strong>Email:</strong> <span id="preview-email"></span></p>
+                <p><strong>Phone:</strong> <span id="preview-phone"></span></p>
+                <p><strong>Summary:</strong> <span id="preview-summary"></span></p>
+                <p><strong>Experience:</strong> <span id="preview-experience"></span></p>
+                <p><strong>Education:</strong> <span id="preview-education"></span></p>
+                <p><strong>Skills:</strong> <span id="preview-skills"></span></p>
+            </div>
+    
+            <button id="print-btn" style="display: none;" onclick="printResume()">Download Resume as PDF</button>
+        </div>
+    
+        <script>
+            // JavaScript functionality
+    
+            // Function to update preview in real-time
+            function updatePreview(fieldId, previewId) {
+                const fieldValue = document.getElementById(fieldId).value;
+                document.getElementById(previewId).innerText = fieldValue;
+            }
+    
+            // Event listeners for real-time preview
+            document.getElementById("Name").addEventListener("input", () => updatePreview("Name", "preview-name"));
+            document.getElementById("Email").addEventListener("input", () => updatePreview("Email", "preview-email"));
+            document.getElementById("Phone").addEventListener("input", () => updatePreview("Phone", "preview-phone"));
+            document.getElementById("Summary").addEventListener("input", () => updatePreview("Summary", "preview-summary"));
+            document.getElementById("Experience").addEventListener("input", () => updatePreview("Experience", "preview-experience"));
+            document.getElementById("Education").addEventListener("input", () => updatePreview("Education", "preview-education"));
+            document.getElementById("Skills").addEventListener("input", () => updatePreview("Skills", "preview-skills"));
+    
+            // Function to generate the resume preview and show the download button
+            function generateResume() {
+                const requiredFields = ["name", "email", "phone", "summary", "experience", "education", "skills"];
+                let allFieldsFilled = true;
+    
+                requiredFields.forEach((fieldId) => {
+                    if (document.getElementById(fieldId).value === "") {
+                        allFieldsFilled = false;
+                    }
+                });
+    
+                if (allFieldsFilled) {
+                    // Show the resume preview section and download button
+                    document.getElementById('resume-preview').style.display = 'block';
+                    document.getElementById('print-btn').style.display = 'block';
+                } else {
+                    alert("Please fill out all fields.");
+                }
+            }
+    
+            // Function to download resume as PDF
+            function printResume() {
+                window.print();
+            }
+        </script>
+    </body>
+    </html>
